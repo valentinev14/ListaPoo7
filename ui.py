@@ -1,4 +1,5 @@
 from service import Service
+
 class UI:
     @staticmethod
     def main():
@@ -19,6 +20,14 @@ class UI:
                 if op == 11: UI.produto_atualizar()
                 if op == 12: UI.produto_excluir()
                 if op == 13: UI.produto_reajustar()
+                if op == 14: UI.venda_inserir()
+                if op == 15: UI.venda_listar()
+                if op == 16: UI.venda_atualizar()
+                if op == 17: UI.venda_excluir()
+                if op == 18: UI.vendaitem_inserir()
+                if op == 19: UI.vendaitem_listar()
+                if op == 20: UI.vendaitem_atualizar()
+                if op == 21: UI.vendaitem_excluir()
             except ValueError as erro:
                 print("Erro:", erro)
     @staticmethod
@@ -26,6 +35,8 @@ class UI:
         print("Clientes: 1 - Inserir, 2 - Listar, 3 - Atualizar, 4 - Excluir")
         print("Categorias: 5 - Inserir, 6 - Listar, 7 - Atualizar, 8 - Excluir")
         print("Produtos: 9 - Inserir, 10 - Listar, 11 - Atualizar, 12 - Excluir")
+        print("Vendas: 14 - Inserir, 15 - Listar, 16 - Atualizar, 17 - Excluir")
+        print("Itens da Venda: 18 - Inserir, 19 - Listar, 20 - Atualizar, 21 - Excluir")
         print("Outros: 13 - Reajustar preços, 99 - Fim")
         return int(input("Informe a opção: "))
 
@@ -106,5 +117,65 @@ class UI:
     def produto_reajustar():
         percentual = float(input("Informe o percentual (ex: 10 reajuste, -15 promoção): "))
         Service.produto_reajustar(percentual)
+
+    @staticmethod
+    def venda_inserir():
+        UI.cliente_listar()
+        id_cliente = int(input("Informe o id do cliente: "))
+        Service.venda_inserir(id_cliente)
+
+    @staticmethod
+    def venda_listar():
+        for v in Service.venda_listar():
+            print(v)
+
+    @staticmethod
+    def venda_atualizar():
+        UI.venda_listar()
+        id = int(input("Informe o id da venda a ser atualizada: "))
+        venda = Service.venda_listar_id(id)
+        if venda is None:
+            raise ValueError("Venda não encontrada")
+        UI.cliente_listar()
+        id_cliente = int(input("Informe o novo id do cliente: "))
+        carrinho = input("Carrinho aberto? (s/n): ").strip().lower() == "s"
+        Service.venda_atualizar(id, venda.get_data(), carrinho, venda.get_total(), id_cliente)
+
+    @staticmethod
+    def venda_excluir():
+        UI.venda_listar()
+        id = int(input("Informe o id da venda a ser excluída: "))
+        Service.venda_excluir(id)
+
+    @staticmethod
+    def vendaitem_inserir():
+        UI.venda_listar()
+        id_venda = int(input("Informe o id da venda: "))
+        UI.produto_listar()
+        id_produto = int(input("Informe o id do produto: "))
+        qtd = int(input("Informe a quantidade: "))
+        Service.vendaitem_inserir(qtd, id_venda, id_produto)
+
+    @staticmethod
+    def vendaitem_listar():
+        for vi in Service.vendaitem_listar():
+            print(vi)
+
+    @staticmethod
+    def vendaitem_atualizar():
+        UI.vendaitem_listar()
+        id = int(input("Informe o id do item a ser atualizado: "))
+        UI.venda_listar()
+        id_venda = int(input("Informe o novo id da venda: "))
+        UI.produto_listar()
+        id_produto = int(input("Informe o novo id do produto: "))
+        qtd = int(input("Informe a nova quantidade: "))
+        Service.vendaitem_atualizar(id, qtd, id_venda, id_produto)
+
+    @staticmethod
+    def vendaitem_excluir():
+        UI.vendaitem_listar()
+        id = int(input("Informe o id do item a ser excluído: "))
+        Service.vendaitem_excluir(id)
 
 UI.main()
