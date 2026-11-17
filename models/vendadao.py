@@ -1,4 +1,4 @@
-from venda import Venda
+from models.venda import Venda
 
 import json
 
