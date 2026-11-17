@@ -1,0 +1,9 @@
+[
+  {
+    "id": 1,
+    "descricao": "teste",
+    "preco": 20.0,
+    "estoque": 0,
+    "id_categoria": 1234
+  }
+]

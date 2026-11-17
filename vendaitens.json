@@ -1,0 +1,9 @@
+[
+    {
+        "id": 0,
+        "qtd": 2,
+        "preco": 20.0,
+        "id_venda": 0,
+        "id_produto": 1
+    }
+]

@@ -1,5 +1,4 @@
 from models.venda import Venda
-
 import json
 
 class VendaDAO:

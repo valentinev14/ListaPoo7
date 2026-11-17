@@ -1,5 +1,4 @@
 from models.vendaitem import VendaItem
-
 import json
 
 class VendaItemDAO:
